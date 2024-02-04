@@ -236,8 +236,8 @@ local function spawnclassic3(c, engine)
 			if DoesEntityExist(vehicle) then
 			 local speed = GetEntitySpeed(vehicle)
 			 local speedMph = speed * 2.23694 
-			 if IsControlPressed(0, 0x8FFC75D6) and speedMph < 60 then
-			 SetVehicleForwardSpeed(vehicle, speed + Config.Speed)
+			 if IsControlPressed(0, 0x8FFC75D6) and speedMph < Config.TopSpeed then
+			 SetVehicleForwardSpeed(vehicle, speed + Config.AccelSpeed)
 			 end
 		end
 		end
