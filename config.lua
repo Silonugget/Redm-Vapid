@@ -6,4 +6,5 @@ Config.SpawnCommand = true
 Config.Command = "vapid"
 Config.DeleteCommand = "deletevapid"
 Config.ResetCommand = "resetvapid"
-Config.Speed = 0.1    
+Config.AccelSpeed = 0.1 --- ACCELLERATION SPEED   
+Config.TopSpeed = 69 --- SPEED LIMIT (Minimum ~35)
