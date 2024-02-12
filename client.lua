@@ -1,8 +1,7 @@
 local classic3 = nil 
 
+------ spawn vehicle function ------
 local function spawnclassic3(c, engine)
-    
-
 	Citizen.Wait(50)
     local pc = GetEntityCoords(PlayerPedId())
     if c then 
@@ -115,7 +114,7 @@ local function spawnclassic3(c, engine)
         targetTurnAngle = -30.0
       end
       
-	        -- Smoothly interpolate towards the target turn angle
+      -- Smoothly interpolate towards the target turn angle
       currentTurnAngle = currentTurnAngle + (targetTurnAngle - currentTurnAngle) / turnSmoothing
 
       currentRotationAngle = currentRotationAngle + rotSpeedIncrement  -- Increment the current rotation angle
@@ -151,26 +150,19 @@ local function spawnclassic3(c, engine)
           end
         end
        end
-	  end
+     end
     end
   end)
 
   -- Create primary audio object
   local primaryAudio = CreateObject(GetHashKey("p_phonograph01x"), pc.x, pc.y, pc.z, true, true, true)
   AttachEntityToEntity(primaryAudio, vehicle, 0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, false, false, false, false, 2, true)
-  NetworkRegisterEntityAsNetworked(primaryAudio)
-
   SetEntityVisible(primaryAudio, false)
-
 
    -- Create secondary audio object
   local secondaryAudio = CreateObject(GetHashKey("p_phonograph01x"), pc.x, pc.y, pc.z, true, true, true)
   AttachEntityToEntity(secondaryAudio, vehicle, 0, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, false, false, false, false, 2, true)
-  NetworkRegisterEntityAsNetworked(secondaryAudio)
-
   SetEntityVisible(secondaryAudio, false)
-
-
 
       Citizen.Wait(50)
 
@@ -292,9 +284,6 @@ end
 RegisterCommand("fixme", function()
     fixme()
 end, false)
---------------------------------------------------------------------------------------------------------------------------------------------
--- function that runs upon second entry that fixes invisibility De-Sync between players
-
 
 --------------------------------------------------------------------------------------------------------------------------------------------
 -- function and command that fixes invisibility De-Sync between players
@@ -402,9 +391,6 @@ Citizen.CreateThread(function()
     end
   end
 end)
---------------------------------------------------------------------------------------------------------------------------------------------
--- Function to fix visibility issue when car is driven in water
-
 
 --------------------------------------------------------------------------------------------------------------------------------------------
 --- ANIMATION TO ENTER DRIVER SEAT PROPER USING CLONE
@@ -507,7 +493,7 @@ RegisterCommand(Config.DeleteCommand, function(_, args)
 			  DeleteEntity(hobj)
 	  DeleteEntity(hobj2)
 	  DeleteEntity(hobj3)
-	     TriggerServerEvent('stopEngineAudio', primaryAudioNetId, secondaryAudioNetId)		
+	     --TriggerServerEvent('stopEngineAudio', primaryAudioNetId, secondaryAudioNetId)		
         if classic3.primaryAudio then
           DeleteEntity(classic3.primaryAudio)
         end
@@ -552,15 +538,15 @@ Citizen.CreateThread(function()
                  if not classic3.engine then  -- If the engine is not on                    if not classic3.engine then  -- If the engine is not on
                         print("engine on")                       
                         -- Notify the server to start the start-up sound on the primary audio object
-                        TriggerServerEvent('startEngineAudio', primaryAudioNetId)                        
+                        --TriggerServerEvent('startEngineAudio', primaryAudioNetId)                        
                         -- Enable the classic3 engine
                         SetVehicleEngineOn(vehicleEntity, 1, 1)
                         -- Citizen.Wait for the start-up sound to finish (assuming it's around 4 seconds long)
                         Citizen.Wait(3800)                        
                         -- Notify the server to start the idle sound on the secondary audio object
-                        TriggerServerEvent('startIdleAudio', secondaryAudioNetId)						
+                        --TriggerServerEvent('startIdleAudio', secondaryAudioNetId)						
 						Citizen.Wait(1900)
-						TriggerServerEvent('stopEngineAudio', primaryAudioNetId)
+						--TriggerServerEvent('stopEngineAudio', primaryAudioNetId)
 						-- lights						
 								SetEntityVisible(hobj, true)
 		                    SetEntityVisible(hobj2, true)
@@ -569,16 +555,16 @@ Citizen.CreateThread(function()
                     else  -- If the engine is already on
                         print("engine off")                       
                         -- Notify the server to stop the sounds
-                        TriggerServerEvent('stopEngineAudio', primaryAudioNetId, secondaryAudioNetId)
+                        --TriggerServerEvent('stopEngineAudio', primaryAudioNetId, secondaryAudioNetId)
                         -- Disable the classic3 engine
                         SetVehicleEngineOn(vehicleEntity, 0, 0)						
 						--- lights off
 								SetEntityVisible(hobj, false)
 		                SetEntityVisible(hobj2, false)
 		                SetEntityVisible(hobj3, false)
-		                 TriggerServerEvent('startStopAudio', primaryAudioNetId)
+		                 --TriggerServerEvent('startStopAudio', primaryAudioNetId)
 		                Citizen.Wait(2000)
-		                TriggerServerEvent('stopEngineAudio', primaryAudioNetId, secondaryAudioNetId)
+		                --TriggerServerEvent('stopEngineAudio', primaryAudioNetId, secondaryAudioNetId)
                     end               
                     -- Toggle the engine state
                     classic3.engine = not classic3.engine					                   
@@ -628,9 +614,9 @@ Citizen.CreateThread(function()
     end
 end)
 --------------------------------------------------------------------------------------------------------------------------------------------
--- Audio functions using PMMS
+-- Audio functions using PMMS - REMOVED - CAN BE RE-ENABLED
 
-local isRevAudioPlaying = false
+--[[ local isRevAudioPlaying = false
 local isAccelAudioPlaying = false
 
 Citizen.CreateThread(function()
@@ -675,10 +661,8 @@ Citizen.CreateThread(function()
         end  
         Citizen.Wait(10)  
     end
-end)
---------------------------------------------------------------------------------------------------------------------------------------------
---------------------------------------------------------------------------------------------------------------------------------------------
---- Speedometer and Engine Key sprite function 
+end)  ]]--
+----------------------- Speedometer and Engine Key sprite function 
 
 Citizen.CreateThread(function()
   local color1, color2 = {126,0,0, 200}, {126,0,0, 200}
@@ -733,7 +717,7 @@ AddEventHandler('onResourceStop', function(resourceName)
 	  DeleteEntity(hobj2)
 	  DeleteEntity(hobj3)
 	  
-	     TriggerServerEvent('stopEngineAudio', primaryAudioNetId, secondaryAudioNetId)		
+	    -- TriggerServerEvent('stopEngineAudio', primaryAudioNetId, secondaryAudioNetId)		
         if classic3.primaryAudio then
           DeleteEntity(classic3.primaryAudio)
         end
@@ -756,6 +740,3 @@ AddEventHandler('onResourceStop', function(resourceName)
         classic3 = nil
       end
     end)
-
-
-
