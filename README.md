@@ -45,7 +45,6 @@ Turn Engine on/off = Left Alt,
 ![screenshot2](https://github.com/Silonugget/Redm-Vapid/assets/107784929/0aa912f5-6195-45ef-a27d-8ef60620b883)
 
 
-[Demo Video]([https://silonugget.com](https://www.youtube.com/watch?v=sfuh_mFBspM))
 
 ## Credits
 - johndoe968 / Mad Rodger  https://www.gta5-mods.com/vehicles/vapid-flivver-add-on
